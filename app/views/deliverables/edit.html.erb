@@ -1,0 +1,45 @@
+<h1>Deliverable <%= @deliverable.index %> for Team <%=  @deliverable.team.name %> </h1>
+<h2><%= @deliverable.name %></h2>
+
+<%=  form_for(@deliverable) do |f| %>
+    <% if @deliverable.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@deliverable.errors.count, "error") %> prohibited this deliverable from being saved:</h2>
+
+          <ul>
+            <% @deliverable.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <p>
+    <% if @deliverable.mandatory? %>
+      <%= f.label :submitted, "mandatory:"  %>
+      <%= f.check_box(:submitted, :disabled => true) %>
+    <% else %>
+      <%= f.label :submitted, "submitted:"  %>
+      <%= f.check_box(:submitted) %>
+    <% end %>
+    </p>
+
+    <table>
+    <%= f.fields_for :contributions, @deliverable.contributions do |fcontr| %>
+
+
+        <tr>
+          <td><%= fcontr.label :score, fcontr.object.user.full_name %></td>
+          <td><%= fcontr.text_field :score, :width => 6 %></td>
+        </tr>
+
+    <% end %>
+    </table>
+
+    <div class="actions">
+      <p>
+      <%= f.submit %>
+      </p>
+    </div>
+
+<% end  %>

@@ -1,0 +1,16 @@
+Dear <%= h @user.first_name %>,
+
+You have recently requested to reset your password at the IPM Teams site.
+To set your new password please click the link below:
+
+<%= h @root_url + @user.reset_url %>
+
+If you believe this message has been sent to you by mistake, please ignore it.
+You should never follow any link sent to you by e-mail unless you understand why you got it.
+
+This is an automated message from IPM Teams site.
+
+On behalf of IPM Team
+
+Best regards,
+Jarek Francik

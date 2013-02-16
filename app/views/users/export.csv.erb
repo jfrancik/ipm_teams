@@ -1,0 +1,41 @@
+k_number,firstname,surname,team,i,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,subm,score,mark,i,mark,TOTAL,required,submitted,marked,effective,AVERAGE,EFFECTIVE,CRSRK,TEST,MODULE
+<% @users.each do |user|
+
+  next unless user.team
+
+  a = []
+
+  a << user.k_number
+  a << user.first_name
+  a << user.last_name
+  a << user.team.name
+
+  a << 0
+  a << user.mark(0)
+
+  user.contributions.sort { |i1, i2| i1.deliverable.index <=> i2.deliverable.index }.each do |contr|
+    del = contr.deliverable
+    a << del.index
+    a << del.submitted? ? 1 : 0
+    a << contr.score
+    a << del.mark
+   end
+
+  a << 25
+  a << user.mark(25)
+
+  a << user.total_mark
+  a << user.required_score
+  a << user.submitted_score
+  a << user.marked_score
+  a << user.effective_score
+  a << user.average_mark
+  a << user.effective_mark
+  a << user.coursework_mark
+  a << user.test_mark
+  a << user.module_mark
+
+
+%>
+<%= raw a.join(',') %>
+<% end %>

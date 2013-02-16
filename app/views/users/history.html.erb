@@ -1,0 +1,14 @@
+<h1>System History</h1>
+
+<ol>
+<% @history.each do |item| %>
+    <li>
+      <%= item.team.name %>:
+      <% if item.submitted? %>
+          <%= item.description %> by <%= item.user.full_name %> on <%= item.created_at %>
+      <% else %>
+          Deliverable <%= item.deliverable.index %> set as not submitted by <%= item.user.full_name %> on <%= item.created_at %>
+      <% end %>
+    </li>
+<% end %>
+</ol>

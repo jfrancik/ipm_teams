@@ -1,0 +1,33 @@
+<h1>Login</h1>
+
+  <%= form_for(@user, :url => login_users_path) do |f| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being logged in:</h2>
+
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <div class="field">
+      <%= f.label :k_number, "Admin account name" %><br />
+      <%= f.text_field :k_number %>
+    </div>
+    <div class="field">
+      <%= f.label :password %><br />
+      <%= f.password_field :password %>&lt;= please note that this is <strong>not</strong> your normal KU password!
+    </div>
+    <div class="actions">
+      <%= f.submit "Login" %>
+    </div>
+  <% end %>
+
+
+<p><strong>Forgot your password? First time here? Click here to <%= link_to "reset your password", lost_password_users_path %></strong>.</p>
+<p>Please note that your normal KU account password <strong>will not work</strong> here.</p>
+

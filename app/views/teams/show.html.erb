@@ -1,0 +1,83 @@
+<h1>Team <%= @team.name %> Deliverables
+  <% if User.read_only?(session) %>
+      (READ ONLY)
+  <% end %>
+</h1>
+
+<p>[<%= link_to "Back to Home Page", @user %>]</p>
+
+<p>This view shows all deliverables submitted by your team, and your marks, where available.
+You can also check how CREDIT POINTS are distributed among members, for each deliverable.<br />
+Click the title of a deliverable if you want to change anything in it.</p>
+
+<% if User.read_only?(session) %>
+    <p>
+      This page is <b>now in READ-ONLY</b> mode. In case you need to modify your contributions please contact
+      the system administrator or your module leader.
+    </p>
+<% end %>
+
+<table>
+  <tr>
+    <th>Deliverable</th>
+    <% @team.users.each do |user| %>
+        <th style="width: 120px"><%=  user.k_number %><br/><%=  user.first_name %><br/><%=  user.last_name %><br/></th>
+    <% end %>
+    <th>Mark</th>
+
+    <% @team.deliverables.each do |del| %>
+      <tr>
+        <% if del.contributions.size == 0 %>
+            <td><b><%=  del.index %>. <%= del.name %> (mandatory) </b></td>
+      <% elsif del.mandatory? %>
+            <% unless User.read_only?(session) %>
+              <td><b><%=  del.index %>. <%= link_to del.name, edit_deliverable_path(del) %> (mandatory)</b></td>
+            <% else %>
+              <td><b><%=  del.index %>. <%= del.name %> (mandatory)</b></td>
+            <% end %>
+      <% else %>
+             <% unless User.read_only?(session) %>
+               <td><%=  del.index %>. <%=  link_to del.name, edit_deliverable_path(del) %></td>
+            <% else %>
+              <td><%=  del.index %>. <%=  del.name %></td>
+            <% end %>
+      <% end %>
+
+        <% if del.submitted? %>
+            <% @team.users.each do |user|
+              contribution = user.contributions.find_by_deliverable_id(del.id)
+            %>
+                <td>
+                  <%= contribution.submitted_score if contribution  %>
+                  <%= "-" unless contribution  %>
+                </td>
+            <% end %>
+            <td>
+              <%= del.mark if del.mark >= 0 %>
+              <%= "not marked" if del.mark < 0 %>
+            </td>
+      <% else %>
+            <%= raw "<td colspan=\"#{@team.users.size}\">not submitted</td>" %>
+            <td><%= "-" if del.mark < 0 %></td>
+        <% end %>
+      </tr>
+
+  <% end %>
+
+  </tr>
+</table>
+
+<h2>Change Log</h2>
+
+<ol>
+  <li>Account created on <%= @team.created_at %></li>
+  <% @team.history_items.each do |item| %>
+    <li>
+      <% if item.submitted? %>
+        <%= item.description %> by <%= item.user.full_name %> on <%= item.created_at %>
+      <% else %>
+        Deliverable <%= item.deliverable.index %> set as not submitted by <%= item.user.full_name %> on <%= item.created_at %>
+    <% end %>
+    </li>
+  <% end %>
+</ol>

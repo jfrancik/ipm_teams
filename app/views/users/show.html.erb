@@ -1,0 +1,173 @@
+<h1>Welcome, <%= h @user.full_name %>!</h1>
+
+<% @user.test_mark = -1 unless @user.test_mark %>
+<% @user.test_mark_A = -1 unless @user.test_mark_A %>
+<% @user.test_mark_B = -1 unless @user.test_mark_B %>
+
+<% if @user.team %>
+<h2>You are a member of <b>Team <%=  @user.team.name%></b></h2>
+  <p><%= link_to("Edit your team deliverables and contributions...", @user.team ) %></p>
+
+<h2>Your Marks</h2>
+
+<h3>DELIVERABLES 1 - 24 (75%):</h3>
+
+<ul>
+  <li><b>Your team size: <%= @user.team_size %></b></li>
+  <li><b>Credit points</b> you need to collect by 16 May: <b><%= @user.required_score %></b></li>
+  <li><b>Your current points: <%= @user.submitted_score %></b><br />
+    <% if @user.missing_score > 0 %>
+      <em>You still have <b><%= @user.missing_score %></b> missing points to collect!</em>
+    <% else %>
+        <em>You now have all required credit points.</em>
+    <% end %>
+  </li>
+  <li><b>Your average mark: <%= @user.average_available? ? @user.average_mark : "not available" %></b><br />
+    <em>This figure does not include any missing points or not marked deliverables.</em>
+    <% if @user.missing_score > 0 %>
+        <br/><em>Note that unless you top up all your missing points your final mark will be substantially affected!</em>
+    <% end %>
+  </li>
+  <li>
+    <b>Your effective mark: <%= @user.effective_available? ? @user.effective_mark : "not available" %></b><br />
+    <% unless @user.effective_available? %>
+        <em>We will not show you this mark before your Tutor marks all the submitted deliverables.</em><br/>
+    <% end %>
+    <em>This figure includes all your missing points (if any).</em>
+  </li>
+</ul>
+
+<h3>PROJECT PROPOSAL (10%) AND POSTER (15%)</h3>
+
+<ul>
+  <li>Project Proposal: <b><%= @user.marked?(0) ? @user.mark(0) : "not marked" %></b></li>
+  <li>Project Poster: <b><%= @user.marked?(25) ? @user.mark(25) : "not marked" %></b></li>
+</ul>
+
+<% if @user.coursework_available? %>
+    <h3>OVERALL COURSEWORK MARK</h3>
+    <table>
+      <tr><td width="20px"></td><td>Project Proposal</td><td>&nbsp;</td><td>10% * <%= @user.mark(0) %> = <%= 0.1 * @user.mark(0) %></td></tr>
+      <tr><td></td><td>Deliverables 1 - 24</td><td>&nbsp;</td><td>75% * <%= @user.effective_mark %> = <%= 0.75 * @user.effective_mark %></td></tr>
+      <tr><td></td><td>Project Poster</td><td>&nbsp;</td><td>15% * <%= @user.mark(25) %> = <%= 0.15 * @user.mark(25) %></td></tr>
+      <tr><td></td><td><b>YOUR COURSEWORK MARK:</b></td><td></td><td><b><%= @user.coursework_mark.round %></b></td></tr>
+    </table>
+<% end %>
+
+<% if @user.test_available? %>
+    <h3>IN-CLASS TEST MARK</h3>
+    <table>
+      <tr><td width="20px"></td><td>Part A:</td><td>&nbsp;</td><td><%= @user.test_mark_A %> out of 80 (<%= @user.test_mark_A / 0.8 %>%)</td></tr>
+      <tr><td width="20px"></td><td>Part B:</td><td>&nbsp;</td><td><%= @user.test_mark_B %> out of 160 (<%= @user.test_mark_B / 1.6 %>%)</td></tr>
+      <tr><td></td><td><b>YOUR TEST MARK:</b></td><td></td><td><b><%= @user.test_mark.round %></b></td></tr>
+    </table>
+    <% end %>
+
+<% if @user.module_available? %>
+    <h3>OVERALL MODULE MARK</h3>
+    <table>
+      <tr><td width="20px"></td><td>Coursework</td><td>&nbsp;</td><td>65% * <%= @user.coursework_mark.round %> = <%= 0.65 * @user.coursework_mark.round %></td></tr>
+      <tr><td width="20px"></td><td>Test</td><td>&nbsp;</td><td>35% * <%= @user.test_mark.round %> = <%= 0.35 * @user.test_mark.round %></td></tr>
+      <tr><td></td><td><b>YOUR MODULE MARK:</b></td><td></td><td><b><%= @user.module_mark.round %></b></td></tr>
+    </table>
+    <% end %>
+
+
+<p><b>All figures indicated here are subject to minor changes</b></p>
+
+
+<h2>How is Your Mark Calculated (Deliverables 1 - 24)</h2>
+
+<p>This section shows how the <em>effective mark</em> for your deliverables 1 - 24 has been calculated.</p>
+
+<table>
+  <th style="width: 320px">Deliverable</th><th style="width: 90px">Score</th><th style="width: 90px">Mark</th><th>Calculation</th>
+  <% @user.contributions.sort {|t1, t2| t1.deliverable.index <=> t2.deliverable.index }.each do |contr|  %>
+    <% del = contr.deliverable %>
+    <% if contr.submitted? %>
+      <tr>
+        <td><%=  del.index %>. <%= del.name %> <%= "(mandatory)" if del.mandatory? %></td>
+        <td><%= contr.submitted_score %></td>
+        <% if contr.marked? %>
+            <td><%= contr.mark %></td>
+            <td><%= contr.marked_score %> * <%= contr.mark %> = <b><%= contr.marked_partial %></b></td>
+      <% else %>
+            <td>not marked</td>
+            <td>not available</td>
+        <% end %>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td><b>TOTAL MARKED:</b></td>
+    <td><b><%=  @user.marked_score %></b></td>
+    <td></td>
+    <td><b><%= @user.total_mark %></b><br/></td>
+  </tr>
+
+  <tr>
+    <td><b>TOTAL:</b></td>
+    <td><b><%=  @user.submitted_score %></b></td>
+    <td></td>
+    <td><b><%= @user.effective_available? ? @user.total_mark : "not available" %></b><br/></td>
+  </tr>
+
+  <tr>
+    <td>MISSING POINTS:</td>
+    <td><%= @user.missing_score %></td>
+    <td></td>
+    <td><%= @user.missing_score %> * 0 = <b>0</b></td>
+  </tr>
+
+  <tr>
+    <td><b>GRAND TOTAL (including missing points):</b></td>
+    <td><b><%=  @user.effective_score %></b></td>
+    <td></td>
+    <td><b><%= @user.effective_available? ? @user.total_mark : "not available" %></b><br/></td>
+  </tr>
+
+
+</table>
+
+
+<p>
+  Your current average mark (marked submissions only, deliverables 1 to 24, no missing points included):<br/>
+    <%=  @user.total_mark %> / <%=  @user.marked_score %> = <b><%= @user.average_available? ? @user.average_mark : "not available" %></b>
+</p>
+
+<p>
+  Your effective average mark (deliverables 1 to 24, including missing points):<br/>
+  <%=  @user.total_mark %> / <%=  @user.effective_score %> = <b><%= @user.effective_available? ? @user.effective_mark : "not available" %></b>
+</p>
+
+<% end %>
+
+
+
+
+
+
+
+
+<% if @user.admin? %>
+
+  <h2>Admin Options</h2>
+
+    <p><%= link_to "All Accounts", "/all" %></p>
+    <p><%= link_to "Teams Index", teams_path %></p>
+    <p><%= link_to "Update Marks (import from CSV formatted text)", edit_team_path(Team.all.first) %></p>
+    <p><%= link_to "Export to CSV", "/export.csv", :format => :csv %></p>
+    <p><%= link_to "System History", "/history" %></p>
+    <p><%= link_to "Create a New Account", new_user_path %></p>
+    <p><%= link_to "Init All Accounts", "/init", :confirm => "This will remove ALL existing data. Are you sure you want to continue?" %></p>
+    <p><%= link_to 'Email All Accounts', "/email", :confirm => 'This will send a massive number of e-mails. Are you sure?' %></p>
+
+
+<% end %>
+
+<p>&nbsp;</p>
+
+<%= link_to 'Edit your account', edit_user_path(@user) %> |
+<%= link_to 'Logout', logout_users_path %>
+

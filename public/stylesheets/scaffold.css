@@ -1,0 +1,128 @@
+html
+{
+	margin: 0;
+	padding: 0;
+}
+body
+{
+    font: normal small Arial, Verdana, Helvetica, sans-serif;
+    font-size: 11pt;
+	background: #E6EBEA;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+#page
+{
+	background: #E6EBEA;
+	width: 1000px;
+	text-align: left;
+	margin: auto;
+}
+#content
+{
+	background: white;
+	padding: 1em;
+    border: solid gray 1px;
+}
+.question
+{
+    font-weight: bold;
+}
+
+/***********************************************************************
+/* Header, Page Decoration and Menu */
+
+#header
+{
+	height: 138px;
+	min-width: 500px;
+	background: #E6EBEA url("/images/logo.png") no-repeat;
+    padding:0;
+    padding-left: 200px;
+    margin:0;
+}
+#header h1
+{
+    height: 118px;
+	font-size: 20pt;
+	color: Black;
+	padding: 16px;
+	margin: 0;
+	border: 0;
+}
+#header h1:first-line {font-size: 32pt;}
+#header h1 a, a:hover, a:visited { color:#000000; background: #E6EBEA; text-decoration:none;; }
+
+.footer
+{
+    font-size: 8pt;
+    text-align:center;
+}
+
+.beta
+{
+    font-size:14pt;
+    vertical-align:bottom;
+    color: red;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+a { color: #000; }
+a:visited { color: #000; background-color:#ffffff;  }
+a:hover { color: #fff; background-color:#000; }
+
+div.field, div.actions {
+  margin-bottom: 10px;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+table
+{
+    border-collapse: collapse;
+}
+td, th
+{
+    text-align: left;
+    vertical-align: top;
+}
+

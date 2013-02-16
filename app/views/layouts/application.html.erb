@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IPM Teams</title>
+  <%= stylesheet_link_tag "scaffold" %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+    <div id="page">
+        <div id="header">
+            <h1><a href="/">IPM Project Teams</a><br/>
+                Setup your team's coursework contributions!
+              <span class="beta">beta</span><br/>
+                <% if User.logged_in?(session) %>
+                  <%= button_to "Logout", "/users/logout", :method => :get %>
+                <% end %>
+            </h1>
+        </div>
+
+        <div id="content">
+
+            <p id="notice"><%= h notice %></p>
+            <%= yield %>
+
+        </div>
+      <div class="footer">
+        This site is run by <%= link_to "Jarek Francik", "http://francik.name" %>.
+        Powered by Ruby on Rails, hosted on <%= link_to "heroku", "http://heroku.com" %>.
+      </div>
+    </div>
+</body>
+</html>

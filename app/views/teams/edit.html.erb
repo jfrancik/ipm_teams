@@ -1,0 +1,15 @@
+<h1>Insert CSV Marks</h1>
+
+<%= form_for @team do |f| %>
+    <%= f.label :csv_crswrk, "Coursework (CSV data):" %>:<br />
+    <%= f.text_area :csv_crswrk, :cols => 118, :rows => 15 %>
+
+    <%= f.label :csv_test, "Test (CSV data):" %>:<br />
+    <%= f.text_area :csv_test, :cols => 118, :rows => 15 %>
+
+    <div class="actions">
+      <p>
+        <%= f.submit "Update Marks" %>
+      </p>
+    </div>
+<% end %>

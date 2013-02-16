@@ -1,0 +1,9 @@
+<p id="notice">A new user <strong><%= h @user.full_name_k_number %></strong> has been created.</p>
+
+<h1>Thank you for registration with IPM Teams!</h1>
+
+<p>Before you can use your account, we need to verify your e-mail address. We have sent you a message
+to the following address: <strong><%= h @user.e_mail %></strong>. Please check your inbox now, locate your message and
+click the link displayed there to activate your account.</p>
+
+<p><%= link_to 'Back to the Login Page', users_path %></p>

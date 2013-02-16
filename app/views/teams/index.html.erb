@@ -1,0 +1,16 @@
+<h1>Teams</h1>
+
+<ul>
+
+  <% for group in 'A' .. 'H' %>
+    <li>
+      <% @teams.each do |team| %>
+          <% if team.name.first == group %>
+              <%=  link_to team.name, team %>, &nbsp;
+          <% end %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%=  link_to "Edit (preliminary)", edit_team_path(@teams.first) %>

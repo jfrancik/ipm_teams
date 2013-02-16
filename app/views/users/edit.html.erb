@@ -1,0 +1,47 @@
+<h1>Edit Your Details</h1>
+
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :k_number %><br />
+    <%= f.text_field :k_number, :readonly => "readonly" %>
+  </div>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </div>
+  <hr/><p>If you don't want to change your password, simply leave the following empty:</p>
+  <div class="field">
+    <%= f.label :current_password %><br />
+    <%= f.password_field :current_password %>
+  </div>
+    <div class="field">
+      <%= f.label :new_password %><br />
+      <%= f.password_field :new_password %>
+    </div>
+    <div class="field">
+      <%= f.label :new_password_confirmation %><br />
+      <%= f.password_field :new_password_confirmation %>
+    </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to your Home Page', @user %>

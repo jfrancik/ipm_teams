@@ -1,0 +1,40 @@
+<% if @user.admin? %>
+
+    <h2>Admin Options</h2>
+
+    <p><%= link_to "All Accounts", "/all" %></p>
+    <p><%= link_to "Teams Index", teams_path %></p>
+    <p><%= link_to "Update Marks (import from CSV formatted text)", edit_team_path(Team.all.first) %></p>
+    <p><%= link_to "Export to CSV", "/export.csv", :format => :csv %></p>
+    <p><%= link_to "System History", "/history" %></p>
+    <p><%= link_to "Create a New Account", new_user_path %></p>
+    <p>%= link_to "Init All Accounts", "/init", :confirm => "This will remove ALL existing data. Are you sure you want to continue?" %></p>
+    <p>%= link_to 'Email All Accounts', "/email", :confirm => 'This will send a massive number of e-mails. Are you sure?' %></p>
+
+
+    <h2>All Existing Accounts</h2>
+    <table>
+      <tr><th></th><th>KNumber</th><th>First name</th><th>Last name</th><th>Unmarked</th><th>Missing</th><th>Mark (1-24)</th><th>Mark (crswrk)</th><th>Reset</th><th>Team</th></tr>
+
+      <% i = 0
+         User.all(:order => "id").each do |user| %>
+          <% next if user.contributions.size == 0 %>
+          <tr>
+            <td><%= i = i + 1 %></td>
+            <td><%= h user.k_number %></td>
+            <td><%= h user.first_name %></td>
+            <td><%= h user.last_name %></td>
+            <td><%= h user.not_marked_score > 0 ? user.not_marked_score : "-"%></td>
+            <td><%= h user.missing_score    > 0 ? user.missing_score    : "-"%></td>
+            <td><%= h user.effective_available? ? user.effective_mark   : "-" %></td>
+            <td><%= h user.module_available? ? user.module_mark.round : "-" %></td>
+            <td><%= h user.passwd_reset %></td>
+            <td><%= h link_to(user.team.name, user.team) if user.team %></td>
+            <td><%= link_to 'Show', user %></td>
+            <td><%= link_to 'Edit', edit_user_path(user) %></td>
+            <td><%= link_to 'Email', "/email/#{user.id}", :confirm => 'This will send an e-mail. Are you sure?' %></td>
+            <td><%= link_to 'Destroy', user, :confirm => 'This will delete an account. Are you sure?', :method => :delete %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>
