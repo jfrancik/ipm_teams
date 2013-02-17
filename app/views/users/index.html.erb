@@ -12,10 +12,17 @@
         </ul>
       </div>
     <% end %>
+    
+    
+    <ol>
+    <% User.all.each do |u| %>
+    <li><%= u.k_number %></li>
+    <% end %>
+    </ol>
 
 
     <div class="field">
-      <%= f.label :k_number, "Admin account name" %><br />
+      <%= f.label :k_number, "KNumber" %><br />
       <%= f.text_field :k_number %>
     </div>
     <div class="field">

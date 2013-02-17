@@ -265,14 +265,14 @@ class User < ActiveRecord::Base
   def init
     self.key = SecureRandom.hex(32)
     self.ver = false
+    self.ver = true if self.privilege == 1 
     self.passwd_reset = false
     return true
   end
 
   def process_k_number
     self.k_number.upcase!
-    self.privilege = 0
-    self.privilege = 1 if self.k_number == "KU32139"
+    self.privilege = 0 unless self.privilege == 1 
     return true
   end
 

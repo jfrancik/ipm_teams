@@ -93,9 +93,9 @@ class UsersController < ApplicationController
   # POST /users/login
   def login
     user = User.find_by_k_number(params[:user][:k_number].upcase)
-    if user && !user.admin?
-      redirect_to(users_path, :notice => "Only ADMIN login now!")
-    elsif !user || !user.authorised?(params[:user][:password])
+#    if user && !user.admin?
+#      redirect_to(users_path, :notice => "Only ADMIN login now!")
+    if !user || !user.authorised?(params[:user][:password])
       redirect_to(users_path, :notice => "Invalid K Number/Password combination")
     elsif !user.activated?
       redirect_to(users_path, :notice => "Account is not yet activated. Please check your e-mail box.")
@@ -183,6 +183,7 @@ class UsersController < ApplicationController
             del.mark = -1
             del.save :validate => false
           end
+    
         end
         user.team = team
 

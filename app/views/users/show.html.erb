@@ -14,8 +14,8 @@
 
 <ul>
   <li><b>Your team size: <%= @user.team_size %></b></li>
-  <li><b>Credit points</b> you need to collect by 16 May: <b><%= @user.required_score %></b></li>
-  <li><b>Your current points: <%= @user.submitted_score %></b><br />
+  <li><b>Credit points</b> you need to collect by 15 May: <b><%= @user.required_score %></b></li>
+  <li><b>Your current points: <%= @user.submitted_score %></b> (this may include 6 mandatory activities)<br />
     <% if @user.missing_score > 0 %>
       <em>You still have <b><%= @user.missing_score %></b> missing points to collect!</em>
     <% else %>

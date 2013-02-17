@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,15 +17,15 @@ ActiveRecord::Schema.define(:version => 20120526001045) do
     t.integer  "user_id"
     t.integer  "deliverable_id"
     t.integer  "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "deliverables", :force => true do |t|
     t.integer  "team_id"
     t.integer  "index"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.boolean  "submitted"
     t.integer  "mark"
   end
@@ -35,14 +36,14 @@ ActiveRecord::Schema.define(:version => 20120526001045) do
     t.integer  "deliverable_id"
     t.boolean  "submitted"
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "teams", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -55,8 +56,8 @@ ActiveRecord::Schema.define(:version => 20120526001045) do
     t.boolean  "ver"
     t.string   "salt"
     t.boolean  "passwd_reset"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "team_id"
     t.integer  "test_mark_A",  :default => -1
     t.integer  "test_mark_B",  :default => -1
