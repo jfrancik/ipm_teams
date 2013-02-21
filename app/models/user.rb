@@ -230,25 +230,25 @@ class User < ActiveRecord::Base
     return false if admin?
     case team.name[0].chr
       when 'A'
-        return true
+        return false
       when 'B'
-        return true
+        return false
       when 'C'
-        return true
+        return false
       when 'D'
-        return true
+        return false
       when 'E'
-        return true
+        return false
       when 'F'
-        return true
+        return false
       when 'G'
-        return true
+        return false
       when 'H'
-        return true
+        return false
       else
-        return true
+        return false
     end
-    return true
+    return false
   end
 
   def self.read_only?(session)
