@@ -14,10 +14,14 @@
 
 <ul>
   <li><b>Your team size: <%= @user.team_size %></b></li>
-  <li><b>Credit points</b> you need to collect by 15 May: <b><%= @user.required_score %></b></li>
-  <li><b>Points you declared submitted: <%= @user.submitted_score %></b> (including mandatory exercises)<br />
+  <li><b>Credit points</b> you need to collect: <b><%= @user.required_halfterm_score %></b> by 22 March; <b><%= @user.required_score %></b> by 15 May</li>
+  <li><b>Points you declared submitted: <%= @user.submitted_score %></b><br />
     <% if @user.missing_score > 0 %>
-      <em>You still have <b><%= @user.missing_score %></b> missing points to collect!</em>
+      <% if @user.missing_halfterm_score > 0 %>
+        <em>You still need to collect <b><%= @user.missing_halfterm_score %></b> points by 22 March (<b><%= @user.missing_score %></b> points by 15 May)!</em>
+      <% else %>
+        <em>You are now ready for the 1st submission (22 March). You still have to collect <b><%= @user.missing_score %></b> more points by 15 May!</em>
+      <% end %>    
     <% else %>
         <em>You now have all required credit points.</em>
     <% end %>

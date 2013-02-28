@@ -15,7 +15,7 @@
     <% end %>
 
     <p>
-    <% if @deliverable.mandatory? %>
+    <% if @deliverable.mandatory? && false %>
       <%= f.label :submitted, "mandatory:"  %>
       <%= f.check_box(:submitted, :disabled => true) %>
     <% else %>

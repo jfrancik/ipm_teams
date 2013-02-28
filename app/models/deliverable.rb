@@ -69,11 +69,15 @@ class Deliverable < ActiveRecord::Base
   end
 
   def submitted?
-    return submitted || mandatory?
+    return submitted
+  end
+
+  def eligible?
+    return submitted? || mandatory?
   end
 
   def total_score
-    contributions.collect {|c| c.submitted_score}.inject(:+)
+    contributions.collect {|c| c.score}.inject(:+)
   end
 
   def min_score

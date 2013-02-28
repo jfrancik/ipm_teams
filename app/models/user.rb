@@ -155,6 +155,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def required_halfterm_score
+    required_score / 2
+  end
+
   def submitted_score
     return 0 unless contributions && contributions.size > 0
     contributions.collect {|c| c.submitted_score }.inject(:+)
@@ -168,6 +172,11 @@ class User < ActiveRecord::Base
   def missing_score
     return 0 if required_score < submitted_score
     required_score - submitted_score
+  end
+
+  def missing_halfterm_score
+    return 0 if required_halfterm_score < submitted_score
+    required_halfterm_score - submitted_score
   end
 
   def not_marked_score

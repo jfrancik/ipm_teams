@@ -57,7 +57,13 @@ Click the title of a deliverable if you want to change anything in it.</p>
               <%= "not marked" if del.mark < 0 %>
             </td>
       <% else %>
-            <%= raw "<td colspan=\"#{@team.users.size}\">not submitted</td>" %>
+            <% if del.contributions.size == 0 %>
+		<%= raw "<td colspan=\"#{@team.users.size}\"><b></b></td>" %>
+	    <% elsif del.mandatory? %>
+		<%= raw "<td colspan=\"#{@team.users.size}\"><b>mandatory - not submitted yet</b></td>" %>
+	    <% else %>
+		<%= raw "<td colspan=\"#{@team.users.size}\">not submitted</td>" %>
+	    <% end %>
             <td><%= "-" if del.mark < 0 %></td>
         <% end %>
       </tr>
