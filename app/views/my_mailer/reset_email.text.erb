@@ -1,4 +1,4 @@
-Dear <%= h @user.first_name %>,
+Dear <%= h @user.first_name %> <%= h @user.last_name %> <% if @user.team %> (Team <%= h @user.team.name%>)<% end %>,
 
 You have recently requested to reset your password at the IPM Teams site.
 To set your new password please click the link below:

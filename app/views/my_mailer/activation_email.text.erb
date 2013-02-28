@@ -1,4 +1,4 @@
-Dear <%= h @user.first_name %>,
+Dear <%= h @user.first_name %> <%= h @user.last_name %> <% if @user.team %> (Team <%= h @user.team.name%>)<% end %>,
 
 Welcome to IPM Teams site!
 

@@ -220,7 +220,7 @@ class UsersController < ApplicationController
         MyMailer.admin_welcome_email(@user, root_url).deliver
         redirect_to users_path, :notice => "E-mail sent to #{@user.e_mail}"
       else
-        count = 10;
+        count = 20;
         User.all(:order => "id").each do |user|
           next if user.passwd_reset
           break if count <= 0
@@ -228,7 +228,7 @@ class UsersController < ApplicationController
           user.reset_password!
           MyMailer.admin_welcome_email(user, root_url).deliver
         end
-        redirect_to users_path, :notice => "Accounts e-mailed"
+        redirect_to User.logged_in(session), :notice => "#{20 - count} accounts e-mailed"
       end
     else
       redirect_to users_path, :notice => "Please login with administrator priviliges"

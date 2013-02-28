@@ -8,8 +8,8 @@
     <p><%= link_to "Export to CSV", "/export.csv", :format => :csv %></p>
     <p><%= link_to "System History", "/history" %></p>
     <p><%= link_to "Create a New Account", new_user_path %></p>
-    <p>%= link_to "Init All Accounts", "/init", :confirm => "This will remove ALL existing data. Are you sure you want to continue?" %></p>
-    <p>%= link_to 'Email All Accounts', "/email", :confirm => 'This will send a massive number of e-mails. Are you sure?' %></p>
+    <p><%= link_to "Init All Accounts", "/init", :confirm => "This will remove ALL existing data. Are you sure you want to continue?" %></p>
+    <p><%= link_to 'Email next 20 Accounts', "/email", :confirm => 'This will send a massive number of e-mails. Are you sure?' %></p>
 
 
     <h2>All Existing Accounts</h2>
