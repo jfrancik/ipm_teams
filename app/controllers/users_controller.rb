@@ -217,7 +217,7 @@ class UsersController < ApplicationController
       @user = User.find(params[:id]) if params[:id]
       if @user
         @user.reset_password!
-        #MyMailer.admin_welcome_email(@user, root_url).deliver
+        MyMailer.admin_welcome_email(@user, root_url).deliver
         redirect_to users_path, :notice => "E-mail sent to #{@user.e_mail}"
       else
         count = 10;
@@ -226,7 +226,7 @@ class UsersController < ApplicationController
           break if count <= 0
           count = count - 1
           user.reset_password!
-          #MyMailer.admin_welcome_email(user, root_url).deliver
+          MyMailer.admin_welcome_email(user, root_url).deliver
         end
         redirect_to users_path, :notice => "Accounts e-mailed"
       end
